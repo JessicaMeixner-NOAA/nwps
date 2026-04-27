@@ -5,7 +5,7 @@ suite prod
         edit PROJ 'NWPS'
         edit PACKAGEHOME '/lfs/h1/ops/%ENVIR%/packages/nwps.%nwps_ver%'
         edit KEEPDATA 'NO'
-        family v1.4
+        family v1.5
           limit nwps_jobs 22
           task jnwps_datachk
             edit QUEUE 'prod_transfer'
@@ -799,6 +799,33 @@ suite prod
               family 18
                 edit CYC '18'
                 task jnwps_stofs_prep
+                  trigger /prod/primary/18/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  cron 00:40
+              endfamily
+            endfamily
+            family stofs_cur
+              edit KEEPDATA 'NO'
+              family 00
+                edit CYC '00'
+                task jnwps_stofs_cur_prep
+                  trigger /prod/primary/00/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  cron 06:40
+              endfamily 
+              family 06
+                edit CYC '06'
+                task jnwps_stofs_cur_prep
+                  trigger /prod/primary/06/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  cron 12:40
+              endfamily
+              family 12
+                edit CYC '12'
+                task jnwps_stofs_cur_prep
+                  trigger /prod/primary/12/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  cron 18:40
+              endfamily
+              family 18
+                edit CYC '18'
+                task jnwps_stofs_cur_prep
                   trigger /prod/primary/18/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
                   cron 00:40
               endfamily
