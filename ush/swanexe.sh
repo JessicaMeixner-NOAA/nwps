@@ -60,6 +60,39 @@ if [ "${MODELCORE}" == "SWAN" ]
 then
    echo "Starting SWAN executable for "${siteid}
 
+   # Determine NTASKS and PROCPERNODE for each siteid 
+   if [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ] || [ "${siteid}" == "sew" ] \
+      || [ "${siteid}" == "bro" ] || [ "${siteid}" == "crp" ] || [ "${siteid}" == "lch" ] \
+      || [ "${siteid}" == "lix" ] || ( [ "${siteid}" == "mtr" ] && [ "${CGNUM}" == "1" ] ) \
+      || ( [ "${siteid}" == "pqr" ] && [ "${CGNUM}" != "2" ] ) \
+      || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" == "1" ] ) \
+      || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" == "4" ] ) \
+      || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" == "5" ] )
+   then
+      NTASKS=48
+      PROCPERNODE=48
+   elif ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" != "1" ] ) \
+     || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" != "4" ] ) \
+     || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" != "5" ] )
+   then
+      NTASKS=96
+      PROCPERNODE=48
+   elif [ "${siteid}" == "lox" ]
+   then
+      NTASKS=24
+      PROCPERNODE=24
+   elif [ "${siteid}" == "ajk" ] \
+     || ( [ "${siteid}" == "mtr" ] && [ "${CGNUM}" == "2" ] ) \
+     || ( [ "${siteid}" == "mtr" ] && [ "${CGNUM}" == "3" ] ) \
+     || ( [ "${siteid}" == "mtr" ] && [ "${CGNUM}" == "4" ] )
+   then
+      NTASKS=120
+      PROCPERNODE=60
+   else
+      NTASKS=16
+      PROCPERNODE=16
+   fi
+
    # Get run PDY and cycle to check for the presence of hotfiles     
    yyyymmdd=`ls *.wnd | cut -c1-8`
    hh=`ls *.wnd | cut -c9-10`
@@ -100,6 +133,43 @@ then
            msg="ERROR - missing PE0000 directory for UNSTRUCTURED run. Reconfigure bathy_db for Unstr SWAN."
            postmsg "$jlogfile" "$msg"
            exit 1
+      fi
+
+      # Run each domain with appropriate number of cores.
+      if [ "${siteid}" == "key" ] || [ "${siteid}" == "mfl" ] || [ "${siteid}" == "akq" ] \
+         || [ "${siteid}" == "mlb" ] || [ "${siteid}" == "box" ] || [ "${siteid}" == "tbw" ] \
+         || [ "${siteid}" == "sgx" ] || [ "${siteid}" == "chs" ] \
+         || [ "${siteid}" == "ilm" ] || [ "${siteid}" == "phi" ] || [ "${siteid}" == "car" ] \
+         || [ "${siteid}" == "tae" ]
+      then
+         NTASKS=96
+         PROCPERNODE=48
+      elif [ "${siteid}" == "hgx" ]
+      then
+         NTASKS=120
+         PROCPERNODE=60
+      elif [ "${siteid}" == "mob" ]
+      then
+         NTASKS=144
+         PROCPERNODE=72
+      elif [ "${siteid}" == "alu" ]
+      then
+         NTASKS=84
+         PROCPERNODE=42
+      elif [ "${siteid}" == "okx" ] || [ "${siteid}" == "sew" ]
+      then
+         NTASKS=60
+         PROCPERNODE=60
+      elif [ "${siteid}" == "sju" ] || [ "${siteid}" == "gum" ] || [ "${siteid}" == "jax" ] \
+         || [ "${siteid}" == "hfo" ] || [ "${siteid}" == "mhx" ] || [ "${siteid}" == "gyx" ] \
+         || [ "${siteid}" == "lox" ] || [ "${siteid}" == "mtr" ] || [ "${siteid}" == "eka" ] \
+         || [ "${siteid}" == "mfr" ] || [ "${siteid}" == "pqr" ] \
+         || [ "${siteid}" == "ajk" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ] \
+         || [ "${siteid}" == "bro" ] || [ "${siteid}" == "crp" ] || [ "${siteid}" == "lch" ] \
+         || [ "${siteid}" == "lix" ] || [ "${siteid}" == "lwx" ]
+      then
+         NTASKS=48
+         PROCPERNODE=48
       fi
 
       # Get run PDY and cycle to check for the presence of hotfiles     
