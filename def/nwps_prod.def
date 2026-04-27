@@ -36,6 +36,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -57,6 +58,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -78,6 +80,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -99,6 +102,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -120,6 +124,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -140,6 +145,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -161,6 +167,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -181,6 +188,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -202,6 +210,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -223,6 +232,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -246,6 +256,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -266,6 +277,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -286,6 +298,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -307,6 +320,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -327,6 +341,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -347,6 +362,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -368,6 +384,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -389,6 +406,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -410,6 +428,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -431,6 +450,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -452,6 +472,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -472,6 +493,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -492,6 +514,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -515,6 +538,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -579,6 +603,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -621,6 +646,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -641,6 +667,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -663,6 +690,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -683,6 +711,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -727,6 +756,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -748,6 +778,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
@@ -768,6 +799,7 @@ suite prod
                   trigger jnwps_wavetrack_cg1 == complete
                 task jnwps_forecast_cgn
                   trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '1'
                 task jnwps_post_cgn
                   trigger jnwps_forecast_cgn == complete
                 task jnwps_prdgen_cgn
