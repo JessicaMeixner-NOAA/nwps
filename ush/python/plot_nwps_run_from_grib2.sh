@@ -99,7 +99,7 @@ echo $$ > ${TMPdir}/${USERNAME}/nwps/7790_plot_nwps_run_from_grib2_sh.pid
 
 # Read our SWAN configuration for this run
 export NESTS="NO"
-if [ -f "${RUNdir}/nests.flag)" ]; then 
+if [ -f "${RUNdir}/nests.flag" ]; then
   hasnest=$(cat ${RUNdir}/nests.flag)
   if [ "${hasnest}" == "TRUE" ]; then export NESTS="YES"; fi
 fi 

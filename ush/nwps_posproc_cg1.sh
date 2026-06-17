@@ -522,8 +522,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
               || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHSX" ] \
               || [ "${SITEID}" == "ILMX" ] || [ "${SITEID}" == "PHIX" ] || [ "${SITEID}" == "GYX" ] \
               || [ "${SITEID}" == "TAEX" ] || [ "${SITEID}" == "MOBX" ] || [ "${SITEID}" == "HGXX" ] \
-              || [ "${SITEID}" == "HFO" ] \
-              || [ "${SITEID}" == "LOX" ] || [ "${SITEID}" == "MTR" ] || [ "${SITEID}" == "EKA" ] \
+              || [ "${SITEID}" == "HFO" ] || [ "${SITEID}" == "MTR" ] || [ "${SITEID}" == "EKA" ] \
               || [ "${SITEID}" == "MFR" ] || [ "${SITEID}" == "PQR" ] || [ "${SITEID}" == "SEWX" ] \
               || [ "${SITEID}" == "AJK" ] || [ "${SITEID}" == "AER" ] || [ "${SITEID}" == "AFG" ] \
               || [ "${SITEID}" == "BRO" ] || [ "${SITEID}" == "CRP" ] || [ "${SITEID}" == "LCH" ] \
@@ -543,7 +542,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
               done
            fi
 	   
-	   if [ "${SITEID}" == "SEW" ] 
+	   if [ "${SITEID}" == "SEW" ] || [ "${SITEID}" == "LOX" ]
            then
               for i in {10..35}; do
                  mkdir -p ${COMOUTCYC}/PE00${i}/
