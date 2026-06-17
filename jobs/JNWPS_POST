@@ -105,8 +105,6 @@ export GESIN=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDY}/nwges)
 export GESINm1=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDYm1}/nwges)
 export GESINm2=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDYm2}/nwges)
 export GESINm3=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDYm3}/nwges)
-export GESINm4=$(compath.py ${NET}/$ver/${NET}.${PDYm4}/nwges)
-export GESINm5=$(compath.py ${NET}/$ver/${NET}.${PDYm5}/nwges)
 export COMOUTwmo=$(compath.py -o ${NET}/${nwps_ver})/${REGION}.${PDY}/wmo
 #--------------------------------------------------------------------------
 export dcom_hist="$GESOUT/dcom_hist.txt"

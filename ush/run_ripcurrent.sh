@@ -251,15 +251,9 @@ cp ${RIPDATA}/${contour}m_RipForecastShoreline_${SITEID}.txt ${RIPDATA}/fort.21
 # ======================================================================
 # Copy the data from the previous 72 hrs
 # ======================================================================
-if [[ -f ${GESINm3}/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA} ]]; then  
-  cp -f ${GESINm3}/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA}
-fi 
-if [[ -f ${GESINm4}/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ]]; then 
-  cp -f ${GESINm4}/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA}
-fi 
-if [[ -f ${GESINm5}/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA} ]]; then 
-  cp -f ${GESINm5}/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA}
-fi 
+cp -f $GESINm3/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA}
+cp -f $GESINm4/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA}
+cp -f $GESINm5/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA}
 # ======================================================================
 # Create output file and add header
 # ======================================================================
