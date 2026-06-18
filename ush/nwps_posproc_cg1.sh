@@ -217,6 +217,7 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      # nomenclature input file for run_runup.sh e.g 20m_contour_CG2.20150202_0000_MHX
      fileor="${dpt_runup_contour}_contour_CG${CGNUM}"
      filein="${dpt_runup_contour}_contour_CG${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
+     filecomout="${NET}.t${hh}z.${dpt_runup_contour}_contour_CG${CGNUM}.${SITEID}.txt"
      #fileout="${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
      #fileout="${WFO}_${NET}_${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}"
      echo "filein: ${filein}"  | tee -a $logrunup
@@ -240,7 +241,7 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      
      if [ "${SENDCOM}" == "YES" ]; then
         mkdir -p $COMOUTCYC
-        cp -fv  ${OUTDIRrunup}/${filein} ${COMOUTCYC}/${filein}
+        cp -fv  ${OUTDIRrunup}/${filein} ${COMOUTCYC}/${filecomout}
         cp -fv  ${OUTDIRrunup}/${FORT22} ${COMOUTCYC}/${FORT22}
 	    if [ "${SENDDBN}" == "YES" ]
 	    then
@@ -330,7 +331,7 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
      COMOUTCYC="${COMOUT_CORRECT}/${cycleout}/${RIPDOMAIN}"
      mkdir -p $COMOUTCYC
-     cp -fv  ${RIPDATA}/${CGCONT} ${COMOUTCYC}/${CGCONT}
+     cp -fv  ${RIPDATA}/${CGCONT} ${COMOUTCYC}/${COM_CGCONT}
      cp -fv  ${RIPDATA}/${FORT23} ${COMOUTCYC}/${FORT23}
 
 
@@ -339,9 +340,6 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
          echo "Sending ${FORT23} to DBNET."
 	     $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_RIPPROB ${job} ${COMOUTCYC}/${FORT23}
      fi
-
-     mkdir -p $GESOUT/riphist/${SITEID}
-     cp -fv  ${RIPDATA}/${CGCONT} ${GESOUT}/riphist/${SITEID}/${CGCONT}
 
      SWAN_RIP_OUTPUT_FILE="${RIPDATA}/${FORT23}"
      rip_current_meta_template="${FIXnwps}/templates/RIP.meta"
