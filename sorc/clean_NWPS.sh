@@ -72,8 +72,8 @@ echo "== Removing approved external and runtime directories =="
 rm -rf "${NWPSdir}/exec"
 
 # FIX (approved)
-#rm -rf "${NWPSdir}/fix/bathy_db"
-#rm -f  "${NWPSdir}/fix/pdef_ncep_global"
+rm -rf "${NWPSdir}/fix/bathy_db"
+rm -f  "${NWPSdir}/fix/pdef_ncep_global"
 
 # lib (approved)
 rm -rf "${NWPSdir}/lib/cartopy"
@@ -96,10 +96,10 @@ rm -rf "${NWPSdir}/sorc/estofs_padcirc.fd/work/padcirc"
 rm -f  "${NWPSdir}/sorc/estofs_padcirc.fd/work/actualflags.txt"
 
 # ush runtime artifacts (approved)
-#rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_global.gz"
-#rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_reg1.gz"
-#rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_reg2.gz"
-#rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_reg3.gz"
+rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_global.gz"
+rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_reg1.gz"
+rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_reg2.gz"
+rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_reg3.gz"
 
 echo "============================================"
 echo " NWPS FULL CLEAN COMPLETED SUCCESSFULLY"
