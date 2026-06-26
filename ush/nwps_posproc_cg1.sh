@@ -457,11 +457,14 @@ then
        if [ -f  ${CFGFILE} ]; then
           # Copying shiproute plots to COMOUT
           #echo "Publishing results" | tee -a ${LOGFILE}
-	  # 1. Enable nullglob so unmatched wildcards expand to nothing
-          shopt -s nullglob
-          # 2. Store the matching files into an array
           files=(${VARdir}/shiproutes/route*/swan*hr*.png)
-          if [ ${#files[@]} -gt 0 ]; then
+          files_exit=false
+          for f_file in "${files[@]}"; do
+            # Check if any file actually exists 
+            [ -e "$f_file" ] && files_exist=true && break
+          done
+
+          if [ "$files_exist" = true ]; then
             cp -pfv "${files[@]}" "${GRAPHICSdirshiproutes}/."
             chmod 777 ${GRAPHICSdirshiproutes}/swan*hr*.png
             cd ${GRAPHICSdirshiproutes}
@@ -469,8 +472,6 @@ then
             tar cvfz ${figsTarFile} *.png
             cp -fpv ${figsTarFile} $COMOUTCYC/${figsTarFile}
           fi 
-          # 4. (Optional) Disable nullglob to restore default Bash behavior
-          shopt -u nullglob
        fi
     fi
 
