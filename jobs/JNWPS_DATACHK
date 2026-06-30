@@ -65,8 +65,8 @@ setpdy.sh
 ##############################################
 # Define COM directory
 ##############################################
-export GESOUT=${GESOUT:-$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}/nwges}
-export GESOUTm1=${GESOUTm1:-$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm1}/nwges}
+export GESOUT=${GESOUT:-$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}}
+export GESOUTm1=${GESOUTm1:-$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm1}}
 export dcom_hist="$GESOUT/dcom_hist.txt"
 export dcom_histm1="$GESOUTm1/dcom_hist.txt"
 export web_status_file="$GESOUT/status_file.txt"

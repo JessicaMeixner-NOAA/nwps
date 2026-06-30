@@ -66,7 +66,7 @@ our @netCdfData;
 #               Environment Variables                #
 ######################################################
 # Setup our NWPS env
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $USHnwps= $ENV{'USHnwps'};
 use lib ("$ENV{'RUNdir'}");
 my $ISPRODUCTION = $ENV{'ISPRODUCTION'};
@@ -98,15 +98,15 @@ my $NWPSplatform = $ENV{'NWPSplatform'};
 
 print "+++++++++++++++++++  waveTracking.pl +++++++++++++++\n";
 print "NWPSplatform: ${NWPSplatform}\n";
-print "NWPSdir : ${NWPSdir}\n";
+print "HOMEnwps : ${HOMEnwps}\n";
 
 
 if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     my $infoFile02 = "${RUNdir}/info_to_nwps_coremodel.txt";
     open IN, "<$infoFile02"  or die "Cannot open: $!";
-    our ($NWPSdir, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
+    our ($HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
     our ($DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN);
-    our ($NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $SITEID);
+    our ($NESTS, $RTOFS, $STOFS, $WEB, $PLOT, $MODELCORE, $SITEID);
     our ($WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $siteid, $GEN_NETCDF);
     our ($USERDELTAC);
 #
@@ -115,7 +115,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 	$ndata+=1;
 	chomp($_);
 	if ($ndata ==1) {
-	    $NWPSdir=$_;
+	    $HOMEnwps=$_;
 	}
 	if ($ndata ==2) {
 	    $ISPRODUCTIO=$_;
@@ -169,7 +169,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 	    $RTOFS=$_;
 	}
 	if ($ndata ==19) {
-	    $ESTOFS=$_;
+	    $STOFS=$_;
 	}
 	if ($ndata ==20) {
 	    $WINDS=$_;
@@ -196,15 +196,15 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     }
     close IN;
 
-   print "$NWPSdir, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir \n";
+   print "$HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir \n";
    print "$DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN \n";
-   print "$NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $SITEID\ n";
+   print "$NESTS, $RTOFS, $STOFS, $WEB, $PLOT, $MODELCORE, $SITEID\ n";
    print "$WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $DATAdir, $siteid, $GEN_NETCDF \n";
    print "$USERDELTAC\n";
 }
 #
 if ($DEBUGGING eq "TRUE") {
-    Logs::run("NWPSdir: $NWPSdir");
+    Logs::run("HOMEnwps: $HOMEnwps");
     Logs::run("DEBUGGING: $DEBUGGING");
     Logs::run("DEBUG_LEVEL: $DEBUG_LEVEL");
     Logs::run("ISPRODUCTION: $ISPRODUCTION");
@@ -329,9 +329,9 @@ for $i (0..0){
 if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     my $infoFile02 = "${RUNdir}/info_to_nwps_coremodel.txt";
     open IN, "<$infoFile02"  or die "Cannot open: $!";
-    our ($NWPSdir, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
+    our ($HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
     our ($DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN);
-    our ($NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE,  $SITEID);
+    our ($NESTS, $RTOFS, $STOFS, $WEB, $PLOT, $MODELCORE,  $SITEID);
     our ($WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $siteid, $GEN_NETCDF);
     our ($USERDELTAC);
 #
@@ -340,7 +340,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 	$ndata+=1;
 	chomp($_);
 	if ($ndata ==1) {
-	    $NWPSdir=$_;
+	    $HOMEnwps=$_;
 	}
 	if ($ndata ==2) {
 	    $ISPRODUCTIO=$_;
@@ -394,7 +394,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 	    $RTOFS=$_;
 	}
 	if ($ndata ==19) {
-	    $ESTOFS=$_;
+	    $STOFS=$_;
 	}
 	if ($ndata ==20) {
 	    $WINDS=$_;
@@ -421,9 +421,9 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     }
     close IN;
 
-   print "$NWPSdir, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir \n";
+   print "$HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir \n";
    print "$DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN \n";
-   print "$NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID\ n";
+   print "$NESTS, $RTOFS, $STOFS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID\ n";
    print "$WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $DATAdir, $siteid, $GEN_NETCDF \n";
    print "$USERDELTAC\n";
 }

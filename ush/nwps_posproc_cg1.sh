@@ -28,7 +28,7 @@ ndata=1
 while read p; do
   echo ${ndata} $p
    if [ ${ndata} -eq 1 ]; then
-    NWPSdir=$p;
+    HOMEnwps=$p;
    fi
    if [ ${ndata} -eq 2 ]; then
      ISPRODUCTIO=$p;
@@ -82,7 +82,7 @@ while read p; do
      RTOFS=$p;
    fi
    if [ ${ndata} -eq 19 ]; then
-     ESTOFS=$p;
+     STOFS=$p;
    fi
    if [ ${ndata} -eq 20 ]; then
      WINDS=$p;
@@ -102,11 +102,11 @@ while read p; do
   ndata=$(( $ndata + 1 ))
 done < ${RUNdir}/info_to_nwps_coremodel.txt
 
-#export NWPSdir DEBUGGING DEBUG_LEVEL BATHYdb SHAPEFILEdb ARCHdir
+#export HOMEnwps DEBUGGING DEBUG_LEVEL BATHYdb SHAPEFILEdb ARCHdir
 #export DATAdir LOGdir VARdir OUTPUTdir RUNdir TMPdir RUNLEN
-#export NEST RTOFS ESTOFS WEB PLOT MODELCORE LOGdir SITEID WNA 
+#export NEST RTOFS STOFS WEB PLOT MODELCORE LOGdir SITEID WNA 
 #export WINDS INPUTdir  ISPRODUCTIO DATAdir
-#source ${NWPSdir}/parm/platform/set_platform.sh
+#source ${HOMEnwps}/parm/platform/set_platform.sh
 logrunup=${LOGdir}/runup.log
 echo "NWPS posproc_CG${CGNUM} " | tee -a $logfile
 
@@ -618,12 +618,12 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         cd ${INPUTdir}
         NewestWind=$(basename `ls -t ${INPUTdir}/NWPSWINDGRID_${siteid}* | head -1`)
         cp ${INPUTdir}/${NewestWind} ${COMOUTCYC}/
-        # b. ESTOFS water level fields (if available)
-        if [ -e ${INPUTdir}/estofs/estofs_waterlevel_start_time.txt ]; then
-           cd ${INPUTdir}/estofs
-           waterlevel_start_time=`cat ${INPUTdir}/estofs/estofs_waterlevel_start_time.txt`
-           tar -cf wave_estofs_waterlevel_${waterlevel_start_time}.tar *.txt wave_estofs_waterlevel_${waterlevel_start_time}*.dat
-           mv  ${INPUTdir}/estofs/wave_estofs_waterlevel_${waterlevel_start_time}.tar ${COMOUTCYC}/
+        # b. STOFS water level fields (if available)
+        if [ -e ${INPUTdir}/stofs/stofs_waterlevel_start_time.txt ]; then
+           cd ${INPUTdir}/stofs
+           waterlevel_start_time=`cat ${INPUTdir}/stofs/stofs_waterlevel_start_time.txt`
+           tar -cf wave_stofs_waterlevel_${waterlevel_start_time}.tar *.txt wave_stofs_waterlevel_${waterlevel_start_time}*.dat
+           mv  ${INPUTdir}/stofs/wave_stofs_waterlevel_${waterlevel_start_time}.tar ${COMOUTCYC}/
         fi
         # b. P-Surge water level fields (if available)
         if [ -e ${INPUTdir}/psurge/psurge_waterlevel_start_time.txt ]; then

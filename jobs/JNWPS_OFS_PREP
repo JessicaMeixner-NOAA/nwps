@@ -72,12 +72,12 @@ setpdy.sh
 # Define COM directory
 ##############################################
 export COMOUT=${COMOUT:-$(compath.py -o ${NET}/${nwps_ver})/${OFS}.${PDY}}
-export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}/nwges
+export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}
 export COMINstofs=${COMINstofs:-$(compath.py stofs/${stofs_ver}/stofs_2d_glo.${PDY})}
 export COMINrtofs=${COMINrtofs:-$(compath.py rtofs/${rtofs_ver}/rtofs.${PDY})}
 export COMINsice=${COMINsice:-$(compath.py seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDY})}
 export COMINsicem1=${COMINsicem1:-$(compath.py seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDYm1})}
-export COMINpsurge=${COMINpsurge:-$(compath.py psurge/${psurge_ver}/psurge.${PDY})}
+export COMINpsurge=${COMINpsurge:-$(compath.py psurge/${psurge_ver})}
 #
 # make sure NWPS COM directory exists
 if [ "${SENDCOM}" = YES ]; then

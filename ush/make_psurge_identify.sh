@@ -5,7 +5,7 @@
 # Tested Run Level(s): 3, 5
 # Shell Used: BASH shell
 # Original Author(s): Roberto.Padilla@noaa.gov
-# Base on make_estofs from Douglas Gaer
+# Base on make_stofs from Douglas Gaer
 # File Creation Date: 12/15/2013
 # Date Last Modified: 
 #
@@ -21,7 +21,7 @@
 # Script used to make P-Surge init files all WFOs. 
 # This is done by identifying which WFO domains from the bulk list 
 #
-#    ${NWPSdir}/fix/configs_psurge/wfolist_psurge.dat
+#    ${HOMEnwps}/fix/configs_psurge/wfolist_psurge.dat
 #
 # have P-Surge data to extract (at the operational resolution), 
 # based on a quick scan low-resolution extraction of their contents. 
@@ -29,7 +29,7 @@
 # footprint).
 #
 # Data is first extracted to ascii at a low resolution using PSURGE2NWPS,
-# and atfer which the program ${NWPSdir}/exec/psurge_identify.exe 
+# and atfer which the program ${HOMEnwps}/exec/psurge_identify.exe 
 # analyses the content and outputs the selected domains in:
 #
 #    wfolist_psurge_final.dat

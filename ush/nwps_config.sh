@@ -39,7 +39,7 @@ echo "Our NWPS site is $SITEID $siteid"
 
 # Variable used to setup the root directory for NWPS package
 # Default is ${HOME}/nwps
-if [ "${NWPSdir}" == "" ]; then export NWPSdir="${HOMEnwps}"; fi
+if [ "${HOMEnwps}" == "" ]; then export HOMEnwps="${HOMEnwps}"; fi
 if [ "${NWPSDATA}" == "" ]; then export NWPSDATA="${DATA}"; fi
 
 # Variable to signal our NWPS env is set
@@ -104,8 +104,8 @@ if [ "${GEN_NETCDF}" == "" ]; then export GEN_NETCDF="FALSE"; fi
 if [ "${GEN_HDF5}" == "" ]; then export GEN_HDF5="FALSE"; fi 
 
 # Set our default database DIRs here
-if [ "${BATHYdb}" == "" ]; then export BATHYdb=${NWPSdir}/fix/bathy_db; fi
-if [ "${SHAPEFILEdb}" == "" ]; then export SHAPEFILEdb=${NWPSdir}/fix/shapefile_db; fi
+if [ "${BATHYdb}" == "" ]; then export BATHYdb=${HOMEnwps}/fix/bathy_db; fi
+if [ "${SHAPEFILEdb}" == "" ]; then export SHAPEFILEdb=${HOMEnwps}/fix/shapefile_db; fi
 
 # Set our default processing DIRs here
 if [ "${DATAdir}" == "" ]; then export DATAdir="${HOME}/data/nwps_${siteid}"; fi
@@ -162,7 +162,7 @@ source ${DATA}/parm/templates/${siteid}/siteid.sh
 if [ ! -e ${USHnwps}/set_os_env.sh ]
 then
     echo "ERROR - Missing ${USHnwps}/set_os_env.sh"
-    echo "ERROR - Check your NWPSdir setting"
+    echo "ERROR - Check your HOMEnwps setting"
     export err=1; err_chk
 fi
 
@@ -193,13 +193,13 @@ fi
 if [ "${NWPSplatform}" == "DEVWCOSS" ]
 then
     echo "NWPS is installed on DEVWCOSS platform, loading WCOSS config"
-    if [ ! -e ${NWPSdir}/ush/devwcoss_config.sh ]
+    if [ ! -e ${HOMEnwps}/ush/devwcoss_config.sh ]
     then
-	echo "ERROR - Missing WCOSS config file ${NWPSdir}/ush/devwcoss_config.sh"
+	echo "ERROR - Missing WCOSS config file ${HOMEnwps}/ush/devwcoss_config.sh"
 	echo "ERROR - Check your NWPS platform type"
 	export err=1; err_chk
     else
-	source ${NWPSdir}/ush/devwcoss_config.sh
+	source ${HOMEnwps}/ush/devwcoss_config.sh
     fi
 fi
 
@@ -223,21 +223,21 @@ if [ "${RTOFSHOURS}" == "" ]; then export RTOFSHOURS=${DEFAULT_RTOFSHOURS}; fi
 if [ "${RTOFSTIMESTEP}" == "" ]; then export RTOFSTIMESTEP=${DEFAULT_RTOFSTIMESTEP}; fi
 
 
-# ESTOFS Domain for water level
-export DEFAULT_ESTOFS_REGION="conus"
+# STOFS Domain for water level
+export DEFAULT_STOFS_REGION="conus"
 # ESFOTSDOMAIN="LON LAT 0. NX NY EW-RESOLUTION NS-RESOLUTION"
-export DEFAULT_ESTOFSDOMAIN="262.00 23.0 0. 682 370 0.029326 0.027027"
-export DEFAULT_ESTOFSNX="683"
-export DEFAULT_ESTOFSNY="371"
-export DEFAULT_ESTOFSHOURS="180"
-export DEFAULT_ESTOFSTIMESTEP="1"
+export DEFAULT_STOFSDOMAIN="262.00 23.0 0. 682 370 0.029326 0.027027"
+export DEFAULT_STOFSNX="683"
+export DEFAULT_STOFSNY="371"
+export DEFAULT_STOFSHOURS="180"
+export DEFAULT_STOFSTIMESTEP="1"
 
-if [ "${ESTOFS_REGION}" == "" ]; then export ESTOFS_REGION="${DEFAULT_ESTOFS_REGION}"; fi
-if [ "${ESTOFSDOMAIN}" == "" ]; then export ESTOFSDOMAIN="${DEFAULT_ESTOFSDOMAIN}"; fi
-if [ "${ESTOFSNX}" == "" ]; then export ESTOFSNX=${DEFAULT_ESTOFSNX}; fi
-if [ "${ESTOFSNY}" == "" ]; then export ESTOFSNY=${DEFAULT_ESTOFSNY}; fi
-if [ "${ESTOFSHOURS}" == "" ]; then export ESTOFSHOURS=${DEFAULT_ESTOFSHOURS}; fi
-if [ "${ESTOFSTIMESTEP}" == "" ]; then export ESTOFSTIMESTEP=${DEFAULT_ESTOFSTIMESTEP}; fi
+if [ "${STOFS_REGION}" == "" ]; then export STOFS_REGION="${DEFAULT_STOFS_REGION}"; fi
+if [ "${STOFSDOMAIN}" == "" ]; then export STOFSDOMAIN="${DEFAULT_STOFSDOMAIN}"; fi
+if [ "${STOFSNX}" == "" ]; then export STOFSNX=${DEFAULT_STOFSNX}; fi
+if [ "${STOFSNY}" == "" ]; then export STOFSNY=${DEFAULT_STOFSNY}; fi
+if [ "${STOFSHOURS}" == "" ]; then export STOFSHOURS=${DEFAULT_STOFSHOURS}; fi
+if [ "${STOFSTIMESTEP}" == "" ]; then export STOFSTIMESTEP=${DEFAULT_STOFSTIMESTEP}; fi
 #AW #FOR PSURGE
 #AW export PSURGEHOURS="102"
 
@@ -260,7 +260,7 @@ if [ "${GFSTIMESTEP}" == "" ]; then export GFSTIMESTEP=${DEFAULT_GFSTIMESTEP}; f
 # Echo our NWPS setup below.
 echo "NWPS site ID is ${SITEID}"
 echo "NWPS site type is ${SITETYPE}"
-echo "NWPS home DIR is ${NWPSdir}"
+echo "NWPS home DIR is ${HOMEnwps}"
 echo "NWPS run started by user ${USERNAME}"
 
 if [ "${DEBUGGING}" == "TRUE" ]
@@ -285,14 +285,14 @@ then
 fi
 
 # Look for region specific overrides
-if [ -e ${DATA}/parm/templates/${siteid}/${siteid}_config.sh ] && [ -e ${NWPSdir}/parm/regions/${regionid}_config.sh ]
+if [ -e ${DATA}/parm/templates/${siteid}/${siteid}_config.sh ] && [ -e ${HOMEnwps}/parm/regions/${regionid}_config.sh ]
 then
-    echo "INFO - Found ${NWPSdir}/parm/regions/${regionid}_config.sh"
+    echo "INFO - Found ${HOMEnwps}/parm/regions/${regionid}_config.sh"
     echo "INFO - Applying ${regionid} region specific settings for ${SITEID}"
     # Read the SITE config to get the regionid for this site
     source ${DATA}/parm/templates/${siteid}/${siteid}_config.sh
     # Read the region config file
-    source ${NWPSdir}/parm/regions/${regionid}_config.sh 
+    source ${HOMEnwps}/parm/regions/${regionid}_config.sh 
 fi
 
 echo "MPMODE = ${MPMODE}"

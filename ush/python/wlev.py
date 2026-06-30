@@ -21,9 +21,9 @@ TEND = int(sys.argv[2])
 print('TSTART = ' + str(TSTART))
 print('TEND = ' + str(TEND))
 
-NWPSdir = os.environ['NWPSdir']
-#NWPSdir = '/scratch2/NCEPDEV/marine/alisalimi/NWPS/featureV_1.5'
-cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
+HOMEnwps = os.environ['HOMEnwps']
+#HOMEnwps = '/scratch2/NCEPDEV/marine/alisalimi/NWPS/featureV_1.5'
+cartopy.config['pre_existing_data_dir'] = HOMEnwps+'/lib/cartopy'
 print('Reading cartopy shapefiles from:')
 print(cartopy.config['pre_existing_data_dir'])
 
@@ -227,7 +227,7 @@ for tstep in range(TSTART, (int(TEND) + 1)):
         plt.plot(npierlons, npierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
         plt.plot(spierlons, spierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
 
-    if WATERLEVELS == 'ESTOFS':
+    if WATERLEVELS == 'STOFS':
         figtitle = 'NWPS ' + WATERLEVELS + ' Sea Surface Height rel. to MSL (ft) \n Hour ' \
                    + str(forecastTime) + ' (' + str(date.hour).zfill(2) + 'Z' + str(date.day).zfill(2) \
                    + monthstr[int(date.month) - 1] + str(date.year) + ')'

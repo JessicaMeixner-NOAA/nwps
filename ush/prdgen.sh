@@ -45,8 +45,6 @@ echo "COARSE OR NESTED GRID(S): ${N}"
 
 echo "Starting NWPS PRODUCTS SCRIPT" | tee -a ${LOGdir}/prdgen_cgn.log 
 
-PARMwmo=${PARMnwps}/wmo_headers
-
 # Here some variables are defined if the run is for CG0 to CG5
 # For CG0 (the output of wave tracking) we need the number of wave systems
 

@@ -30,6 +30,9 @@ if [[ ! -f ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID} ]]; then
 echo "Cant find ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID}" | tee -a logrunup
    continue
 fi
+
+. prep_step
+
 #
 # ======================================================================
 # Define Fortran Unit Number filenames
@@ -92,10 +95,10 @@ while read line; do
         || [ "${SITEID}" == "EKA" ] || [ "${SITEID}" == "MFR" ] || [ "${SITEID}" == "PQR" ] \
         || [ "${SITEID}" == "SEW" ]
         then
-           ${NWPSdir}/exec/runupforecast_wr.exe
+           ${HOMEnwps}/exec/runupforecast_wr.exe
            export err=$?;
         else
-           ${NWPSdir}/exec/runupforecast.exe
+           ${HOMEnwps}/exec/runupforecast.exe
            export err=$?;
         fi
         echo "Exit Code: ${err}" | tee -a ${LOGdir}/runup.log
