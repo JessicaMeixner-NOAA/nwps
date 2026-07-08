@@ -271,19 +271,6 @@ else
     echo "INFO - Debugging is disabled for this run"
 fi
 
-if [ "${ISPRODUCTION}" == "TRUE" ]
-then 
-    echo "INFO - Production mode is enabled for this run"
-else
-    echo "INFO - Production mode is disabled for this run"
-fi
-
-if [ "${ISPRODUCTION}" == "TRUE" ] && [ "${DEBUGGING}" == "TRUE" ]
-then
-    echo "WARNING - This is a production workstation with debugging on"
-    echo "WARNING - Check your DEBUGGING setting"
-fi
-
 # Look for region specific overrides
 if [ -e ${DATA}/parm/templates/${siteid}/${siteid}_config.sh ] && [ -e ${HOMEnwps}/parm/regions/${regionid}_config.sh ]
 then
