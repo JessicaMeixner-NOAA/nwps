@@ -75,7 +75,7 @@ case ${OFSTYPE} in
     ;;
 esac
 
-if [ $SENDDBN = YES ]; then
+if [ ${SENDDBN} = YES ] && [ "${OFSTYPE}" != "stofs_cur" ]; then
     rm -rf ${DATA}/tars
     mkdir ${DATA}/tars
     for i in ${COMOUT}/${OFSTYPE}/*_output; do
