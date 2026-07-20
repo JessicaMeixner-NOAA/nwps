@@ -27,6 +27,11 @@ if [ "${hastracking}" == "TRUE" ]
    # ----- Convert partition file to Python scikit learn format ----
    mv swan_part.CG1.raw partition.raw
    ${EXECnwps}/ww3_sysprep.exe
+   export err=$?
+   if [[ ${err} -ne 0 ]]; then
+     pgm="$(basename "ww3_sysprep.exe")"
+     err_exit "ww3_sysprep.exe failed"
+   fi
 
    # ----- Call script to perform cluster-based wave tracking ----
    cd ${RUNdir}
@@ -39,7 +44,7 @@ if [ "${hastracking}" == "TRUE" ]
    then
       msg="FATAL ERROR: Missing inputCG1 file. Cannot open ${inputparm}"
       postmsg $jlogfile "$msg"
-      export err=1; err_chk
+      err_exit "$msg"
    fi
 
 
@@ -50,8 +55,7 @@ if [ "${hastracking}" == "TRUE" ]
 
    # Sanity check
    if [ -z "$yyyy$mon$dd$hh$mm" ]; then
-     echo "ERROR: could not parse INPGRID WIND time from $inputparm" >&2
-     export err=1; err_chk
+     err_exit "ERROR: could not parse INPGRID WIND time from $inputparm"
    fi
 
    # 2) Build PDY and cycle
