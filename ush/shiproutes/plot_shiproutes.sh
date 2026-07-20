@@ -38,8 +38,7 @@ then
     then
 	source ${USHnwps}/nwps_config.sh
     else
-	echo "ERROR - Cannot find ${USHnwps}/nwps_config.sh"
-	exit 1
+	err_exit "ERROR - Cannot find ${USHnwps}/nwps_config.sh"
     fi
 fi
 
@@ -51,22 +50,19 @@ then
     cd ${OUTPUTdir}/grib2/CG1
     INPUTGRIB2file=$(ls -1rat --color=none nwps.t??z.CG1.???.grib2 | tail -1)
     if [ "${INPUTGRIB2file}" == "" ]; then
-	echo "ERROR - No CG1 GRIB2 file from last run"
-	exit 1
+	err_exit "ERROR - No CG1 GRIB2 file from last run"
     fi
     INPUTGRIB2file=$(echo "${OUTPUTdir}/grib2/CG1/${INPUTGRIB2file}")
 fi
 
 if [ ! -e ${INPUTGRIB2file} ]; then
-    echo "ERROR - ${INPUTGRIB2file} file does not exist"
-    exit 1
+    err_exit "ERROR - ${INPUTGRIB2file} file does not exist"
 fi
 
 CFGFILE=${FIXnwps}/shiproutes/${siteid}_shiproutes.cfg
 if [ ! -e ${CFGFILE} ]
 then
-    echo "ERROR - Missing ${FIXnwps}/shiproutes/${siteid}_shiproutes.cfg"
-    exit 1
+    err_exit "ERROR - Missing ${FIXnwps}/shiproutes/${siteid}_shiproutes.cfg"
 fi
 
 FIXPOINTS="${EXECnwps}/nwps_utils_fix_ascii_point_data"
@@ -201,32 +197,25 @@ do
 
 	echo "Checking ship route configuration" | tee -a ${LOGFILE}
 	if [ "${loc1}" == "" ]; then
-	    echo "ERROR - loc1 is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
-	    continue
+	    err_exit "ERROR - loc1 is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${loc2}" == "" ]; then
-	    echo "ERROR - loc2 is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
-	    continue
+	    err_exit "ERROR - loc2 is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${stlat}" == "" ]; then
-	    echo "ERROR - stlat is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
-	    continue
+	    err_exit "ERROR - stlat is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${stlon}" == "" ]; then
-	    echo "ERROR - stlon is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
-	    continue
+	    err_exit "ERROR - stlon is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${endlat}" == "" ]; then
-	    echo "ERROR - endlat is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
-	    continue
+	    err_exit "ERROR - endlat is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${endlon}" == "" ]; then
-	    echo "ERROR - endlon is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
-	    continue
+	    err_exit "ERROR - endlon is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${res}" == "" ]; then
-	    echo "ERROR - res	 is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
-	    continue
+	    err_exit "ERROR - res is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${current_box_lats}" == "" ]; then
 	    current_box_lats="${stlat} ${endlat}"
@@ -241,13 +230,11 @@ do
 	    echo "WARNING - current_box_xaxis is not set, defaulting to ${stlon} ${endlon}" | tee -a ${LOGFILE}
 	fi
 	if [ "${swan_table_name}" == "" ]; then
-	    echo "ERROR - swan_table_name is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
-	    continue
+	    err_exit "ERROR - swan_table_name is not set, check ${CFGFILE} config file"
 	fi
 	CG1line=$(grep -E '^TABLE' ${RUNdir}/inputCG1 | grep ${swan_table_name})
 	if [ "${CG1line}" == "" ]; then
-	    echo "ERROR - ${swan_table_name} not found in inputCG1 file" | tee -a ${LOGFILE}
-	    continue
+	    err_exit "ERROR - ${swan_table_name} not found in inputCG1 file"
 	fi
 	STARTtime=$(echo ${CG1line} | awk '{ print $13 }')
 	YY=$(echo ${STARTtime} | cut -b3-4)
@@ -256,8 +243,7 @@ do
 	HH=$(echo ${STARTtime} | cut -b10-11)
 	SWANoutputfile="${RUNdir}/${swan_table_name}.YY${YY}.MO${MO}.DD${DD}.HH${HH}"
 	if [ ! -f ${SWANoutputfile} ]; then
-	    echo "ERROR - ${SWANoutputfile} file does not exist" | tee -a ${LOGFILE}
-	    continue
+	    err_exit "ERROR - ${SWANoutputfile} file does not exist"
 	fi
 
 	cp -fpv ${SWANoutputfile} ${PROCdirparll}/${swan_table_name} | tee -a ${LOGFILE}
@@ -274,8 +260,7 @@ do
 	ptnum=$(echo "scale=0;(${dist}/${res})" | bc)
 	echo "Total Grid Points: $ptnum"
 	if [ $ptnum -le 0 ]; then
-	    echo "ERROR - Bad number of points $ptnum" | tee -a ${LOGFILE}
-	    continue
+	    err_exit "ERROR - Bad number of points $ptnum"
 	fi
 	
 	latincr=$(echo "scale=10;(${endlat} - ${stlat})/$ptnum" | bc)
