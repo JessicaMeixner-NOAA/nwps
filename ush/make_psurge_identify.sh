@@ -39,8 +39,7 @@ set -xa
 
 if [ "${USHnwps}" == "" ]
     then 
-    echo "ERROR - Your USHnwps variable is not set"
-    exit 1
+    err_exit "ERROR - Your USHnwps variable is not set"
 fi
 PSURGE2NWPS=${EXECnwps}/psurge2nwps
 echo "====== Running make_psurge_identify.sh ======================="
@@ -124,6 +123,11 @@ do
    echo " WFO: $wfo,     Npx: $Npx   ,   Npy: $Npy"
 
    ${EXECnwps}/psurge2nwps_identify.exe ${wfo} ${Npx} ${Npy}
+   export err=$?
+   if [[ ${err} -ne 0 ]]; then
+      pgm="$(basename "psurge2nwps_identify.exe")"
+      err_exit "psurge2nwps_identify.exe did not complete successfully"
+   fi
    rm  -f ${RUNdir}/*${wfo}*.dat
 
 done < ${FIXnwps}/configs_psurge/wfolist_psurge.dat
