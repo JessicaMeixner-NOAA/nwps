@@ -57,8 +57,7 @@ export TZ=UTC
 set -xa
 if [ "${USHnwps}" == "" ]
     then 
-    echo "ERROR - Your USHnwps variable is not set"
-    exit 1
+    err_exit "ERROR - Your USHnwps variable is not set"
 fi
 
 echo "------- Running make_psurge_final.sh -------"
@@ -217,6 +216,10 @@ do
      fi
      echo "psurge2nwps_psoutTOnwps.exe ${wfo} ${Npx} ${Npy} ${dateinname_ini} ${EXCEED} ${HH_ini} ${epoc_time_ini}"
      ${EXECnwps}/psurge2nwps_psoutTOnwps.exe ${wfo} ${Npx} ${Npy} ${dateinname_ini} ${EXCEED} ${HH_ini} ${epoc_time_ini} ${Vcorrection}
+     if [[ ${err} -ne 0 ]]; then
+       pgm="$(basename "psurge2nwps_psoutTOnwps.exe")"
+       err_exit "psurge2nwps_psoutTOnwps.exe did not complete successfully"
+     fi
      #mv psurge*${wfo}*e${EXCEED}.dat ${COMOUT}/${OFSTYPE}
      rm psurge*${wfo}*e${EXCEED}.dat
    done
@@ -256,6 +259,10 @@ then
          ${EXECnwps}/psurge2nwps_combine.exe ${stofs_dir} ${wfo} ${EXCEED} \
                                         ${epoc_time_ini} ${yyyymmdd_ini} ${HH_ini} ${fhour} \
                                         ${epoc_time_ini2} ${yyyymmdd_ini2} ${HH_ini2} ${fhour2}
+	 if [[ ${err} -ne 0 ]]; then
+            pgm="$(basename "psurge2nwps_combine.exe")"
+            err_exit "Psurge2nwps combine did not complete successfully for ${fhour}"
+         fi
       done
    done < ${RUNdir}/exceedances
 else
@@ -281,6 +288,10 @@ else
             ${EXECnwps}/psurge2nwps_combine.exe ${stofs_dir} ${wfo} ${EXCEED} \
                                            ${epoc_time_ini} ${yyyymmdd_ini} ${HH_ini} ${fhour} \
                                            ${epoc_time_ini2} ${yyyymmdd_ini2} ${HH_ini2} ${fhour2}
+            if [[ ${err} -ne 0 ]]; then
+              pgm="$(basename "psurge2nwps_combine.exe")"
+              err_exit "Psurge2nwps combine did not complete successfully for ${fhour} from one cycle ago"
+            fi
          done
       done < ${RUNdir}/exceedances
    fi
