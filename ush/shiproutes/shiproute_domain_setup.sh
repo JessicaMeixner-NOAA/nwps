@@ -112,22 +112,28 @@ do
 
 	echo "Checking ship route configuration" | tee -a ${LOGFILE}
 	if [ "${loc1}" == "" ]; then
-	    err_exit "ERROR - loc1 is not set, check ${CFGFILE} config file"
+	    echo "ERROR - loc1 is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit " loc1 is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${loc2}" == "" ]; then
-	    err_exit "ERROR - loc2 is not set, check ${CFGFILE} config file"
+        echo "ERROR - loc2 is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "loc2 is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${stlat}" == "" ]; then
-	    err_exit "ERROR - stlat is not set, check ${CFGFILE} config file"
+        echo "ERROR - stlat is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "stlat is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${stlon}" == "" ]; then
-	    err_exit "ERROR - stlon is not set, check ${CFGFILE} config file"
+        echo "ERROR - stlon is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "stlon is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${endlat}" == "" ]; then
-	    err_exit "ERROR - endlat is not set, check ${CFGFILE} config file"
+        echo "ERROR - endlat is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "endlat is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${endlon}" == "" ]; then
-	    err_exit "ERROR - endlon is not set, check ${CFGFILE} config file"
+        echo "ERROR - endlon is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "endlon is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${res}" == "" ]; then
 	    err_exit "ERROR - res	 is not set, check ${CFGFILE} config file"
@@ -157,7 +163,8 @@ do
 	ptnum=$(echo "scale=0;(${dist}/${res})" | bc)
 	echo "Total Grid Points: $ptnum"
 	if [ $ptnum -le 0 ]; then
-	    err_exit "ERROR - Bad number of points $ptnum" 
+        echo "ERROR - Bad number of points $ptnum" | tee -a ${LOGFILE}
+	    err_exit "Bad number of points $ptnum" 
 	fi
 	
 	latincr=$(echo "scale=10;(${endlat} - ${stlat})/$ptnum" | bc)

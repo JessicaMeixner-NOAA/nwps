@@ -196,25 +196,32 @@ do
 
 	echo "Checking ship route configuration" | tee -a ${LOGFILE}
 	if [ "${loc1}" == "" ]; then
-	    err_exit "ERROR - loc1 is not set, check ${CFGFILE} config file"
+	    echo "ERROR - loc1 is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "loc1 is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${loc2}" == "" ]; then
-	    err_exit "ERROR - loc2 is not set, check ${CFGFILE} config file"
+        echo "ERROR - loc2 is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "loc2 is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${stlat}" == "" ]; then
-	    err_exit "ERROR - stlat is not set, check ${CFGFILE} config file"
+        echo "ERROR - stlat is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "stlat is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${stlon}" == "" ]; then
-	    err_exit "ERROR - stlon is not set, check ${CFGFILE} config file"
+        echo "ERROR - stlon is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "stlon is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${endlat}" == "" ]; then
-	    err_exit "ERROR - endlat is not set, check ${CFGFILE} config file"
+        echo "ERROR - endlat is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "endlat is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${endlon}" == "" ]; then
-	    err_exit "ERROR - endlon is not set, check ${CFGFILE} config file"
+        echo "ERROR - endlon is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "endlon is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${res}" == "" ]; then
-	    err_exit "ERROR - res is not set, check ${CFGFILE} config file"
+        echo "ERROR - res	 is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "res is not set, check ${CFGFILE} config file"
 	fi
 	if [ "${current_box_lats}" == "" ]; then
 	    current_box_lats="${stlat} ${endlat}"
@@ -229,11 +236,13 @@ do
 	    echo "WARNING - current_box_xaxis is not set, defaulting to ${stlon} ${endlon}" | tee -a ${LOGFILE}
 	fi
 	if [ "${swan_table_name}" == "" ]; then
-	    err_exit "ERROR - swan_table_name is not set, check ${CFGFILE} config file"
+        echo "ERROR - swan_table_name is not set, check ${CFGFILE} config file" | tee -a ${LOGFILE}
+	    err_exit "swan_table_name is not set, check ${CFGFILE} config file"
 	fi
 	CG1line=$(grep -E '^TABLE' ${RUNdir}/inputCG1 | grep ${swan_table_name})
 	if [ "${CG1line}" == "" ]; then
-	    err_exit "ERROR - ${swan_table_name} not found in inputCG1 file"
+        echo "ERROR - ${swan_table_name} not found in inputCG1 file" | tee -a ${LOGFILE}
+	    err_exit "${swan_table_name} not found in inputCG1 file"
 	fi
 	STARTtime=$(echo ${CG1line} | awk '{ print $13 }')
 	YY=$(echo ${STARTtime} | cut -b3-4)
@@ -242,7 +251,8 @@ do
 	HH=$(echo ${STARTtime} | cut -b10-11)
 	SWANoutputfile="${RUNdir}/${swan_table_name}.YY${YY}.MO${MO}.DD${DD}.HH${HH}"
 	if [ ! -f ${SWANoutputfile} ]; then
-	    err_exit "ERROR - ${SWANoutputfile} file does not exist"
+        echo "ERROR - ${SWANoutputfile} file does not exist" | tee -a ${LOGFILE}
+	    err_exit "${SWANoutputfile} file does not exist"
 	fi
 
 	cp -fpv ${SWANoutputfile} ${PROCdirparll}/${swan_table_name} | tee -a ${LOGFILE}
@@ -259,7 +269,8 @@ do
 	ptnum=$(echo "scale=0;(${dist}/${res})" | bc)
 	echo "Total Grid Points: $ptnum"
 	if [ $ptnum -le 0 ]; then
-	    err_exit "ERROR - Bad number of points $ptnum"
+        echo "ERROR - Bad number of points $ptnum" | tee -a ${LOGFILE}
+	    err_exit "Bad number of points $ptnum"
 	fi
 	
 	latincr=$(echo "scale=10;(${endlat} - ${stlat})/$ptnum" | bc)
