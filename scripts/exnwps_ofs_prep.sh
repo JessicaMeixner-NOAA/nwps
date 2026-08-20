@@ -89,8 +89,9 @@ if [ ${SENDDBN} = YES ] && [ "${OFSTYPE}" != "stofs_cur" ]; then
             find ${i}/ -name *txt -exec basename '{}' ';' >> ${DATA}/tars/${i##*/}.list
 	    TARCYCLE=${CYCLE}
         fi
-
-        echo "tar cvf ${DATA}/tars/${i##*/}_${TARCYCLE}.tar -C ${i} -T ${DATA}/tars/${i##*/}.list; if [ "$?" = "0" ]; then mv ${DATA}/tars/${i##*/}_${TARCYCLE}.tar ${COMOUT}/${OFSTYPE}/; $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_TAR $job ${COMOUT}/${OFSTYPE}/${i##*/}_${TARCYCLE}.tar; fi" >> ${DATA}/tars/tar_cmdfile
+        
+	tarfilename=nwps.t${TARCYCLE}z.${i##*/}.tar
+        echo "tar cvf ${DATA}/tars/${tarfilename} -C ${i} -T ${DATA}/tars/${i##*/}.list; if [ "$?" = "0" ]; then mv ${DATA}/tars/${tarfilename} ${COMOUT}/${OFSTYPE}/; $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_TAR $job ${COMOUT}/${OFSTYPE}/${tarfilename}; fi" >> ${DATA}/tars/tar_cmdfile
     done
     #aprun -n24 -N24 -j1 -d1 cfp ${DATA}/tars/tar_cmdfile
     mpiexec -np 24 --cpu-bind verbose,core cfp ${DATA}/tars/tar_cmdfile
