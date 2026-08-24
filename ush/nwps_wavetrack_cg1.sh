@@ -83,7 +83,7 @@ if [ "${hastracking}" == "TRUE" ]
    tar -czvf ${figsTarFile} swan_systrk1_hr???.png
    cp -fv ${RUNdir}/${figsTarFile} $COMOUTCYC/
    if [ ${SENDDBN} = YES ]; then
-     ${DBNROOT}/bin/dbn_alert MODEL NWPS_ASCII_TAR ${job} ${COMOUTCYC}/${figsTarFile}
+     ${DBNROOT}/bin/dbn_alert MODEL NWPS_PLOTS_TAR ${job} ${COMOUTCYC}/${figsTarFile}
    fi
    cp -fv ${RUNdir}/nwps.t${cycle}z.cg0_trkng.${siteid}.bull $COMOUTCYC/
    rm ${RUNdir}/swan_systrk1_hr???.png

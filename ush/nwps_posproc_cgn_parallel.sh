@@ -426,7 +426,7 @@ then
   tar cvfz ${figsTarFile} *.png
   cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
   if [ ${SENDDBN} = YES ]; then
-    ${DBNROOT}/bin/dbn_alert MODEL NWPS_ASCII_TAR ${job} ${COMOUTCYC}/${figsTarFile}
+    ${DBNROOT}/bin/dbn_alert MODEL NWPS_PLOTS_TAR ${job} ${COMOUTCYC}/${figsTarFile}
   fi
 fi
 
