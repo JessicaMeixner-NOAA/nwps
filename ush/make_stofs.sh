@@ -15,12 +15,12 @@ set -xa
 # Support Team:
 #
 # Contributors: Roberto Padilla
-#               
+#
 # -----------------------------------------------------------
 # ------------- Program Description and Details -------------
 # -----------------------------------------------------------
 #
-# Script used to make STOFS SWAN init files all WFOs. 
+# Script used to make STOFS SWAN init files all WFOs.
 #
 #
 # -----------------------------------------------------------
@@ -83,7 +83,7 @@ function MakeClip() {
     datfile="${WFO}SWAN_stofs.t${CYCLE}z.f${FF}.dat"
 
     if [ ! -e ${CLIPdir}/${clip_file} ];then
-	    echo "Clip and reproject to LAT/LON grid" 
+	    echo "Clip and reproject to LAT/LON grid"
 	    echo "${WGRIB2} ${DIR}/${FILE} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/${clip_file}" 
 	    ${WGRIB2} ${DIR}/${FILE} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/${clip_file}
     fi
@@ -99,7 +99,7 @@ function MakeClip() {
 	    echo "Using sea ice to mask STOFS area with high ice density" | tee -a ${LOGfile}
 	    echo "${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/${PARM}.bin ${CLIPdir}/${clip_file}"
 	    ${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/${PARM}.bin ${CLIPdir}/${clip_file}
-	    echo "Writing final DAT file with ice mask"  
+	    echo "Writing final DAT file with ice mask"
 	    ${EXECnwps}/nwps_utils_seaice_mask -m${SEAICEBLOCKDENS} ${CLIPdir}/${PARM}.bin ${CLIPdir}/ice.bin > ${swan_wl_ofile}
 	    rm -f ${CLIPdir}/${PARM}.bin
 	else
@@ -115,31 +115,11 @@ function MakeClip() {
 function process_wfolist() {
     WFO=$(echo ${site} | tr [:lower:] [:upper:])
     wfo=$(echo ${site} | tr [:upper:] [:lower:])
-    echo "Creating STOFS init files for ${WFO}" 
-    source ${FIXnwps}/configs/${wfo}_ncep_config.sh    
+    echo "Creating STOFS init files for ${WFO}"
+    source ${FIXnwps}/configs/${wfo}_ncep_config.sh
     export err=$?; err_chk
     STOFS_REGION=$(echo ${STOFS_REGION} | tr [:upper:] [:lower:])
 #..........................................
-     if [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.east" ]
-     then
-       hasdownload_000=${hasDL[1]}
-     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "puertori" ]
-     then
-       hasdownload_000=${hasDL[2]}
-     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.west" ]
-     then
-       hasdownload_000=${hasDL[3]}
-     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "hawaii" ]
-     then
-       hasdownload_000=${hasDL[4]}
-     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "alaska" ]
-     then
-       hasdownload_000=${hasDL[5]}
-     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "guam" ]
-     then
-       hasdownload_000=${hasDL[6]}
-     fi
-#................................................
     OUTPUTdir="${RUNdir}/${wfo}_output"
     CLIPdir="${RUNdir}/${wfo}_hourly"
     INGESTdir="${INGESTdir_org}/${wfo}"
@@ -148,8 +128,8 @@ function process_wfolist() {
 #    if [ ! -e ${INGESTdir} ]; then mkdir -p ${INGESTdir}; fi
 
     if [ "${STOFS_REGION}" == "none" ];then
-    	echo "ERROR - No STOFS region for ${WFO}" 
-    	echo "ERROR - Skipping init files for ${WFO}" 
+    	echo "ERROR - No STOFS region for ${WFO}"
+    	echo "ERROR - Skipping init files for ${WFO}"
     	continue
     fi
 
@@ -159,7 +139,7 @@ function process_wfolist() {
     LL_LAT=$(echo ${STOFSDOMAIN} | awk '{ print $2}')
     DX=$(echo ${STOFSDOMAIN} | awk '{ print $6}')
     DY=$(echo ${STOFSDOMAIN} | awk '{ print $7}')
-    
+
     echo "STOFS_REGION = ${STOFS_REGION}"
     echo "STOFSDOMAIN = ${STOFSDOMAIN}"
     echo "NX = ${STOFSNX}"
@@ -175,111 +155,82 @@ function process_wfolist() {
     file="${STOFS_BASIN}.t${CYCLE}z.${STOFS_REGION}.f${FF}.grib2"
     icefile="seaice.t00z.5min.grb.grib2"
     outfile="${file}"
-    cd ${SPOOLdir}
 
-    if [ "${hasdownload_000}" == "" ]; then hasdownload_000="false"; fi
-    
-    if [ "${hasdownload_000}" == "false" ];then
-        if [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.east" ];then
-           hasDL[1]="true"
-        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "puertori" ];then
-           hasDL[2]="true"
-        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.west" ];then
-           hasDL[3]="true"
-        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "hawaii" ];then
-           hasDL[4]="true"
-        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "alaska" ];then
-           hasDL[5]="true"
-        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "guam" ];then
-           hasDL[6]="true"
+    echo "Checking source GRIB2 file ${COMINstofs}/${file}"
+
+    if ! check_bad_grib2_file "${COMINstofs}/${file}"; then
+       warn_and_disable_stofs_grib2 "STOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
+       rm -f ${OUTPUTdir}/LOCKFILE
+       return
+    fi
+
+    echo "cp -rp ${COMINstofs}/${file} ${CLIPdir}/${file}"
+    cp -rp "${COMINstofs}/${file}" "${CLIPdir}/${file}"
+
+    if [ "$?" != "0" ] && [ ! -e "${CLIPdir}/${file}" ];then
+        sleep 2
+        echo "Retrying copy of ${CLIPdir}/${file}"
+        cp -rp "${COMINstofs}/${file}" "${CLIPdir}/${file}"
+
+        if [ "$?" != "0" ] && [ ! -e "${CLIPdir}/${file}" ]; then
+            echo "ERROR - copying file ${CLIPdir}/${file}"
+            export err=1
+            err_chk
+        fi
+    fi
+
+    if [ "${STOFSUSEICEMASK}" == "TRUE" ]
+    then
+        echo "Using sea ice to mask STOFS area with high ice density"
+
+        if [ -e "${COMINsice}/${icefile}" ]; then
+            ice_source="${COMINsice}/${icefile}"
+
+        elif [ -e "${COMINsicem1}/${icefile}" ]; then
+            echo "Today's ice concentration file not yet available. Using yesterday's file."
+            ice_source="${COMINsicem1}/${icefile}"
+
+        else
+            echo "FATAL ERROR - Sea ice file ${icefile} not available today or yesterday."
+            ls -l "${COMINsicem1}/${icefile}" "${COMINsice}/${icefile}"
+            export err=1
+            err_chk
         fi
 
-        echo "Downloading ${SPOOLdir}/$file to $outfile" 
-        echo "Checking source GRIB2 file ${COMINstofs}/${file}"
-        if ! check_bad_grib2_file "${COMINstofs}/${file}"; then
-           warn_and_disable_stofs_grib2 "STOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
+        if ! check_bad_grib2_file "${ice_source}"; then
+           warn_and_disable_stofs_grib2 "Sea ice GRIB2 file ${ice_source} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
            rm -f ${OUTPUTdir}/LOCKFILE
            return
         fi
-        echo "cp -rp ${COMINstofs}/${file} ."
-        cp -rp ${COMINstofs}/${file} .
-        if [ "$?" != "0" ] && [ ! -e ${file} ];then
-           sleep 2
-           echo "ERROR - downling file ${PRODUCTdir}/${file}" 
-        fi
-        cp -rp ${COMINstofs}/${file} .
-        if [ "$?" != "0" ] && [ ! -e ${file} ];then
-           echo "ERROR - downling file ${PRODUCTdir}/${file}" 
-           export err=1; err_chk
-        fi
 
-        if [ "${STOFSUSEICEMASK}" == "TRUE" ]
-        then
-            echo "Using sea ice to mask STOFS area with high ice density"
+        echo "Copying ${ice_source} to ${CLIPdir}/${icefile}"
+        cp -rp "${ice_source}" "${CLIPdir}/${icefile}"
 
-            echo "Downloading ${SPOOLdir}/$icefile"
-            if [ -e ${COMINsice}/${icefile} ];then
-               if ! check_bad_grib2_file "${COMINsice}/${icefile}"; then
-                   warn_and_disable_stofs_grib2 "Sea ice GRIB2 file ${COMINsice}/${icefile} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
-                   rm -f ${OUTPUTdir}/LOCKFILE
-                   return
-               fi
-               echo "cp -rp ${COMINsice}/${icefile} ."
-               cp -rp ${COMINsice}/${icefile} .
+        if [ "$?" != "0" ] && [ ! -e "${CLIPdir}/${icefile}" ];then
+            sleep 2
+            echo "Retrying copy of ${CLIPdir}/${icefile}"
+            cp -rp "${ice_source}" "${CLIPdir}/${icefile}"
 
-               if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
-                   sleep 2
-                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}" 
-               fi
-               cp -rp ${COMINsice}/${icefile} .
-               if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
-                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}"
-                   export err=1; err_chk
-               fi
-
-            elif [ -e ${COMINsicem1}/${icefile} ];then
-               echo "Today's ice concentration file not yet available. Downloading yesterday's file."
-               if ! check_bad_grib2_file "${COMINsicem1}/${icefile}"; then
-                   warn_and_disable_stofs_grib2 "Sea ice GRIB2 file ${COMINsicem1}/${icefile} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
-                   rm -f ${OUTPUTdir}/LOCKFILE
-                   return
-               fi
-               echo "cp -rp ${COMINsicem1}/${icefile} ."
-               cp -rp ${COMINsicem1}/${icefile} .
-
-               if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
-                   sleep 2
-                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}" 
-               fi
-               cp -rp ${COMINsicem1}/${icefile} .
-               if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
-                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}"
-                   export err=1; err_chk
-               fi
-            else
-                echo "FATAL ERROR - Sea ice file ${PRODUCTdir}/${icefile} not available today or yesterday."
-                ls -l ${COMINsicem1}/${icefile} ${COMINsice}/${icefile}
-                export err=1; err_chk
+            if [ "$?" != "0" ] && [ ! -e "${CLIPdir}/${icefile}" ];then
+                echo "ERROR - copying file ${CLIPdir}/${icefile}"
+                export err=1
+                err_chk
             fi
         fi
-
     fi
-
-    hasdownload_000="true"
 
     if [ "${STOFSUSEICEMASK}" == "TRUE" ]
     then
        echo "Using sea ice to mask STOFS area with high ice density"
        echo "Clip and reproject to sea ice grid"
-       #--- Make local copy of input file and check size -----------
-       cp ${SPOOLdir}/${icefile} ${CLIPdir}/${icefile}
-       $WGRIB2 -count ${CLIPdir}/${icefile} > ${CLIPdir}/filechk 2>/dev/null
+       #--- Check local copy of input file -----------
+       $WGRIB2 -count "${CLIPdir}/${icefile}" > "${CLIPdir}/filechk" 2>/dev/null
        nrecords=$(wc -l < ${CLIPdir}/filechk)
        while [ ${nrecords} -ne 1 ]; do
           echo "Repeating GRIB2 ice file copy for ${wfo}"
-          cp ${SPOOLdir}/${icefile} ${CLIPdir}/${icefile}
+          cp -rp "${ice_source}" "${CLIPdir}/${icefile}"
           $WGRIB2 -count ${CLIPdir}/${icefile} > ${CLIPdir}/filechk 2>/dev/null
-	  nrecords=$(wc -l < ${CLIPdir}/filechk)
+          nrecords=$(wc -l < ${CLIPdir}/filechk)
        done
        #------------------------------------------------------------
        echo "${WGRIB2} ${CLIPdir}/${icefile} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/ice.grib2"
@@ -292,9 +243,8 @@ function process_wfolist() {
 
     while [ "${epoc_time}" == "" ] || [ "${epoc_time}" == "-1" ]; do
        echo "Extracting epoc time for ${wfo}"
-       epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
+       epoc_time=`${WGRIB2} -unix_time ${CLIPdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
     done
-    #epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
     date_str=`echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }'`
     echo ${epoc_time} > ${OUTPUTdir}/stofs_waterlevel_start_time.txt
     echo "STOFSDOMAIN:${STOFSDOMAIN}" > ${OUTPUTdir}/stofs_waterlevel_domain.txt
@@ -309,16 +259,12 @@ function process_wfolist() {
     swan_wl_ofile="${OUTPUTdir}/${swan_wl_ofile_fname}"
 
     if [ ! -e ${swan_wl_ofile} ];then
-        #MakeClip ${SPOOLdir} ${file} 0 ${WFO}
         #--- Make local copy of input file and check size -----------
-        while [ ! -s ${CLIPdir}/${file} ]; do
-           cp ${SPOOLdir}/${file} ${CLIPdir}/${file}
-        done
         $WGRIB2 -count ${CLIPdir}/${file} > ${CLIPdir}/filechk 2>/dev/null
         nrecords=$(wc -l < ${CLIPdir}/filechk)
         while [ ${nrecords} -ne 3 ]; do
            echo "Repeating GRIB2 file copy for ${wfo} f000"
-           cp ${SPOOLdir}/${file} ${CLIPdir}/${file}
+           cp -rp "${COMINstofs}/${file}" "${CLIPdir}/${file}"
            $WGRIB2 -count ${CLIPdir}/${file} > ${CLIPdir}/filechk 2>/dev/null
            nrecords=$(wc -l < ${CLIPdir}/filechk)
         done
@@ -337,13 +283,12 @@ function process_wfolist() {
 #            $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_PARA $job ${swan_wl_ofile}
 #        fi
     else
-    	echo "Already created ${swan_wl_ofile}" 
-    	echo "Skipping this file" 
+    	echo "Already created ${swan_wl_ofile}"
+    	echo "Skipping this file"
     fi
 
     end=$TIMESTEP
 
-    cd ${SPOOLdir}
     until [ $end -gt $HOURS ]; do
     	FF=`echo $end`
     	if [ $end -le 99 ];then
@@ -356,52 +301,43 @@ function process_wfolist() {
     	swan_wl_ofile_fname="wave_stofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
     	swan_wl_ofile="${OUTPUTdir}/${swan_wl_ofile_fname}"
     	if [ -e ${swan_wl_ofile} ];then
-    	    echo "Already created ${swan_wl_ofile}" 
-    	    echo "Skipping this file" 
+    	    echo "Already created ${swan_wl_ofile}"
+    	    echo "Skipping this file"
     	    let end+=$TIMESTEP
     	    continue
     	fi
 
         file="${STOFS_BASIN}.t${CYCLE}z.${STOFS_REGION}.f${FF}.grib2"
-    	outfile="${file}"
-    	cd ${PRODUCTdir}
-    	if [ ! -e ${VARdir}/hasstofsdownload_${CYCLE}z.${STOFS_BASIN}.${STOFS_REGION}.f${FF} ];then
-            echo "Checking source GRIB2 file ${COMINstofs}/${file}"
-            if ! check_bad_grib2_file "${COMINstofs}/${file}"; then
-                warn_and_disable_stofs_grib2 "STOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
-                rm -f ${OUTPUTdir}/LOCKFILE
-                return
-            fi
-	        echo "Copying ${COMINstofs}/${file} ${PRODUCTdir}/${file}"
-	        echo "cp -rp ${COMINstofs}/${file} ."
-	        cp -rp ${COMINstofs}/${file} .
-	        if [ "$?" != "0" ] && [ ! -e ${file} ];then
-                sleep 2
-	            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
-	        fi
- 	        cp -rp ${COMINstofs}/${file} .
-	        if [ "$?" != "0" ] && [ ! -e ${file} ];then
-	            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
-                export err=1; err_chk
-	        fi
-            echo " "
-	        echo "++++++++++++++++++++++++++++++++++++++++++++"
-            ls -l ${PRODUCTdir}/${file}
-    	    if [ ! -e ${outfile} ];then
-		        echo "INFO - ${PRODUCTdir}/${file} not available for copy" 
-        		echo "Exiting" 
-        		export err=1; err_chk
-    	    fi
-    	fi
-	touch ${VARdir}/hasstofsdownload_${CYCLE}z.${STOFS_BASIN}.${STOFS_REGION}.f${FF}
 
-        #--- Make local copy of input file and check size -----------
-        cp ${PRODUCTdir}/${file} ${CLIPdir}/${file}
+        echo "Checking source GRIB2 file ${COMINstofs}/${file}"
+
+        if ! check_bad_grib2_file "${COMINstofs}/${file}"; then
+            warn_and_disable_stofs_grib2 "STOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
+            rm -f ${OUTPUTdir}/LOCKFILE
+            return
+        fi
+
+        echo "Copying ${COMINstofs}/${file} to ${CLIPdir}/${file}"
+        cp -rp "${COMINstofs}/${file}" "${CLIPdir}/${file}"
+
+        if [ "$?" != "0" ] && [ ! -e "${CLIPdir}/${file}" ]; then
+            sleep 2
+            echo "Retrying copy of ${CLIPdir}/${file}"
+            cp -rp "${COMINstofs}/${file}" "${CLIPdir}/${file}"
+
+            if [ "$?" != "0" ] && [ ! -e "${CLIPdir}/${file}" ]; then
+                echo "ERROR - copying file ${CLIPdir}/${file}"
+                export err=1
+                err_chk
+            fi
+        fi
+
+        #--- Check local copy of input file -----------
         $WGRIB2 -count ${CLIPdir}/${file} > ${CLIPdir}/filechk 2>/dev/null
         nrecords=$(wc -l < ${CLIPdir}/filechk)
         while [ ${nrecords} -ne 3 ]; do
            echo "Repeating GRIB2 file copy for ${wfo} f${FF}"
-           cp ${PRODUCTdir}/${file} ${CLIPdir}/${file}
+           cp -rp "${COMINstofs}/${file}" "${CLIPdir}/${file}"
            $WGRIB2 -count ${CLIPdir}/${file} > ${CLIPdir}/filechk 2>/dev/null
            nrecords=$(wc -l < ${CLIPdir}/filechk)
         done
