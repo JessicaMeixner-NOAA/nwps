@@ -157,7 +157,7 @@ if [ "$1" != "" ]
 then
    CYCLE="$1"
 else
-   export CYCLE=${zcycle:-00}
+   export CYCLE=${z_cycle:-00}
    echo ""
    echo "Cycle being set based on psurge data, CYCLE=${CYCLE}"
 fi
