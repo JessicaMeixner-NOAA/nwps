@@ -142,9 +142,15 @@ PSurge_latest=${COMINpsurge}
 NewestPsurge=$(awk '/CONUS/ {print $1}' $(lfs find ${PSurge_latest}/psurge.${YYYYMMDD} -name *.go | sort |tail -1 )| head -1)
 
 if [ "${NewestPsurge}" == "" ]
-    then 
-    echo "ERROR - No Psurge fields to process"
-    export err=1; err_chk
+    then
+	#Fail back to PDYm1 
+	echo "WARNING: No psurge data in ${PSurge_latest}/psurge.${YYYYMMDD}, trying in ${PDYm1}"
+        NewestPsurge=$(awk '/CONUS/ {print $1}' $(lfs find ${PSurge_latest}/psurge.${PDYm1} -name *.go | sort |tail -1 )| head -1)
+        if [ "${NewestPsurge}" == "" ]
+        then
+           echo "ERROR - No Psurge fields to process"
+           export err=1; err_chk
+	fi 
 fi
 
 # Determine what the latest cycle of psurge is by grabbing the latest ZZz from the file names:
