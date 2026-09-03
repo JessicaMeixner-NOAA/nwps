@@ -65,7 +65,6 @@ case ${OFSTYPE} in
         export CYCLE="00"
         ${USHnwps}/make_psurge.sh
         export err=$?; err_chk
-        rm -rf ${COMOUT}/${OFSTYPE}/{*hourly,*hourly.spool}
     ;;
     *)
         echo "\$OFS type not found"
